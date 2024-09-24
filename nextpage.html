@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate Your Card</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-arrow"><img src="images/back.png" alt="go back"></a>
+        </div>
+        <h1>Activate Your Card</h1>
+        <p>Please enter your last 4 numbers on your card.</p>
+        <div class="code-inputs">
+            <input type="text" autocomplete="off" maxlength="1" id="code1" oninput="updateCard(this, 'digit1', 'code2')" autofocus>
+            <input type="text" autocomplete="off" maxlength="1" id="code2" oninput="updateCard(this, 'digit2', 'code3')">
+            <input type="text" autocomplete="off" maxlength="1" id="code3" oninput="updateCard(this, 'digit3', 'code4')">
+            <input type="text" autocomplete="off" maxlength="1" id="code4" oninput="updateCard(this, 'digit4', null)">
+        </div>
+
+        <div class="card">
+            <div class="card-details">
+                <img src="images/Group 1171277315.png" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+        function updateCard(currentInput, currentId, nextId) {
+            const currentValue = currentInput.value;
+    
+            // Move to the next input field if a digit is entered
+            if (currentValue.length === 1 && nextId !== null) {
+                document.getElementById(nextId).focus();
+            }
+    
+            // Move back to the previous input field if the current field is cleared
+            if (currentValue.length === 0 && currentId !== 'code1') {
+                const prevId = 'code' + (parseInt(currentId.slice(-1)) - 1);
+                document.getElementById(prevId).focus();
+            }
+    
+            checkCompletion();
+        }
+    
+        function checkCompletion() {
+            const code1 = document.getElementById('code1').value;
+            const code2 = document.getElementById('code2').value;
+            const code3 = document.getElementById('code3').value;
+            const code4 = document.getElementById('code4').value;
+    
+
+            if (code1 && code2 && code3 && code4) {
+                const activationCode = code1 + code2 + code3 + code4;
+                
+                localStorage.setItem('activationCode', activationCode);
+                window.location.href = '3d.html';  
+            }
+        }
+        const storedCode = localStorage.getItem('activationCode');
+console.log(storedCode);  
+    </script>
+    
+</body>
+</html>

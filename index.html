@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate Your Card</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Activate your card</h1>
+        <p>Please enter your activation code that can be found in the card envelope.</p>
+        <div class="code-inputs">
+            <input type="text" autocomplete="off" maxlength="1" id="code1" oninput="updateCard(this, 'code1', 'code2')" autofocus>
+            <input type="text" autocomplete="off" maxlength="1" id="code2" oninput="updateCard(this, 'code2', 'code3')">
+            <input type="text" autocomplete="off" maxlength="1" id="code3" oninput="updateCard(this, 'code3', 'code4')">
+            <input type="text" autocomplete="off" maxlength="1" id="code4" oninput="updateCard(this, 'code4', 'code5')">
+            <input type="text" autocomplete="off" maxlength="1" id="code5" oninput="updateCard(this, 'code5', 'code6')">
+            <input type="text" autocomplete="off" maxlength="1" id="code6" oninput="updateCard(this, 'code6', null)">
+        </div>
+
+        <div class="card">
+            <div class="card-details">
+                <img src="images/Group 1171277315.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCard(currentInput, currentId, nextId) {
+            const currentValue = currentInput.value;
+            if (currentValue.length === 1 && nextId !== null) {
+                document.getElementById(nextId).focus();
+            }
+    
+            if (currentValue.length === 0 && currentId !== 'code1') {
+                const prevId = 'code' + (parseInt(currentId.slice(-1)) - 1);
+                document.getElementById(prevId).focus();
+            }
+            checkCompletion();
+        }
+    
+        function checkCompletion() {
+            const code1 = document.getElementById('code1').value;
+            const code2 = document.getElementById('code2').value;
+            const code3 = document.getElementById('code3').value;
+            const code4 = document.getElementById('code4').value;
+            const code5 = document.getElementById('code5').value;
+            const code6 = document.getElementById('code6').value;
+    
+            if (code1 && code2 && code3 && code4 && code5 && code6) {
+                const activationCode = code1 + code2 + code3 + code4 + code5 + code6;
+                localStorage.setItem('activationCode', activationCode); 
+                window.location.href = 'nextpage.html'; 
+            }
+        }
+        const savedCode = localStorage.getItem('activationCode');
+console.log(savedCode);  
+
+    </script>
+    
+</body>
+</html>
